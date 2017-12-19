@@ -1,0 +1,211 @@
+#include<iostream>
+using namespace std;
+template<class T>
+class Vector
+{
+private:
+	T* _start;//指向动态数组头，里面存放首地址
+	T* _finish;//指向动态数组有效元素的后面单元，也是地址
+	T* _endOfStorage;//指向当前动态开辟数组的末尾，存放的也是地址
+public:
+	Vector()//无参构造函数
+		: _start(NULL)
+		, _finish(NULL)
+		, _endOfStorage(NULL)
+	{}
+
+	Vector(T* array, int size)//有参构造函数
+		:_start(new T[size])
+	{
+		for (int i = 0; i < size; i++)
+			PushBack(array[i]);
+		_finish = &_start[size];
+		_endOfStorage = &_start[size];
+	}
+	Vector(const Vector& v)//拷贝构造是会程序崩溃，建议性给出，大佬有想法的可以给我提，这个地方实现的不是很好，有bug.
+		//:_start(new T[v.Size()])
+	{
+		int oldSize = (int)v.Size();
+		_start = new T[oldSize];
+		for (int i = 0; i < oldSize; i++)
+			PushBack(v._start[i]);
+		_finish = &_start[oldSize];
+		_endOfStorage = &_start[oldSize];
+	}
+	Vector& operator=(const Vector& v)// 赋值运算符重载函数
+	{
+		int oldSize = v.Size();
+		T* temp = new T[oldSize];
+		for (int i = 0; i < oldSize; i++)
+			temp[i] = v._start[i];
+		delete _start;
+		_start = temp;
+		_finish = &_start[oldSize];
+		_endOfStorage = &_start[oldSize];
+		temp = NULL;
+		return *this;
+	}
+	~Vector()
+	{
+		Clear();
+		if (_start)
+		delete[] _start;
+	}
+
+	/////////////// Modify /////////////////////////////////////
+	void PushBack(const T& data)//尾部插入元素
+	{
+		_CheckCapacity();
+		*_finish = data;
+		_finish++;
+	}
+	void PopBack()//尾部删除元素
+	{
+		_finish--;
+	}
+	void PushFront(const T& data)//头部插入元素
+	{
+		int i = 0;
+		_CheckCapacity();
+		if (Empty())
+			PushBack(data);
+		else
+		{
+			for (i = Size(); i > 0; i--)
+				_start[i] = _start[i - 1];
+			_start[i] = data;
+			_finish++;
+		}
+	}
+	void PopFront()//头部删除元素
+	{
+		if (!Empty())
+		{
+			for (int i = 0; i < Size(); i++)
+				_start[i] = _start[i + 1];
+			_finish--;
+		}
+	}
+	void Insert(size_t pos, const T& data)//插入函数
+	{
+
+		if (pos > *_finish)
+			return;
+		_CheckCapacity();
+		for (i = _finish - _start; i > pos; i--)
+			_start[i] = _start[i - 1];
+		_start[pos] = data;
+		_finish++;
+	}
+	void Erase(size_t pos)//删除指定位置元素
+	{
+		if (pos >= _finish - _start)
+			return;
+		for (int i = pos; i < _finish - _start; i++)
+			_start[i] = _start[i + 1];
+		_finish--;
+	}
+	void Clear()//清空元素函数
+	{
+		//for (int i = Size(); i >= 0; i--)
+		//	delete *_start[i];
+		_finish = _start;
+	}
+
+	///////////////////// Capacity //////////////////////////////////////////
+	size_t Size()const//获取当前数组中的元素
+	{
+		return _finish - _start;
+	}
+	bool Empty()const//数组判空（1为空）
+	{
+		return _finish == _start;
+	}
+	size_t Capacity()const// 获取空间容量
+	{
+		return  _endOfStorage - _start;
+	}
+	void ReSize(size_t newSize, const T& data = T())//改变动态数组大小，若改变后大小大，则用data填充
+	{
+		if (newSize < _finish)
+			_finish = &_start[newSize];
+		else
+		{
+			for (int i = _finish - _start; i < newSize; i++)
+			{
+				_CheckCapacity();
+				_start[i] = data;
+			}
+			_finish = &_start[newSize];
+		}
+	}
+
+	///////////////////Element Acess//////////////////////////////////
+	T& operator[](size_t index)// 该有的运算符重载函数
+	{
+		return _start[index];
+	}
+	const T& operator[](size_t index)const
+	{
+		return _start[index];
+	}
+	T& Front()
+	{
+		return _start[0];
+	}
+	const T& Front()const
+	{
+		return _start[0];
+	}
+	T& Back()
+	{
+		return *(_fininsh - 1);
+	}
+	const T& Back()const
+	{
+		return *(_fininsh - 1);
+	}
+
+private:
+	void _CheckCapacity()//容量判断函数，容量不足时，扩容
+	{
+		if (_finish == _endOfStorage)
+		{
+			int oldSize = Size();
+			T* temp = new T[oldSize * 2 + 3];
+			for (int i = 0; i < oldSize; i++)
+				temp[i] = _start[i];
+			if (_start != NULL)
+				delete _start;
+			_start = temp;
+			temp = NULL;
+			_finish = &_start[oldSize];
+			_endOfStorage = &_start[oldSize * 2 + 3];
+		}
+	}
+};
+int main(void)
+{
+	Vector<int> v;
+	/*int array[] = { 4, 1, 8, 7, 5 };
+	int n = sizeof(array) / sizeof(array[0]);*/
+	v.PushBack(1);
+	v.PushBack(2);
+	v.PushBack(3);
+	v.PushBack(4);
+	v.PushBack(5);
+	cout << v.Size() << endl;
+	v.PopBack();
+
+	v.PushFront(6);
+	v.PushBack(8);
+	v.PopFront();
+	cout << v.Size() << endl;
+	//Vector<int> v2(v);
+	//v2 = v;
+	//cout << v2.Size() << endl;
+	//Vector<int> v2(array, n);
+	//cout << v2.Size() << endl;
+
+	return 0;
+}
