@@ -1,0 +1,76 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<assert.h>
+#include<string.h>
+void* my_strcpy(char *dest,const char *src)
+{
+	void * ret = dest;
+	assert(dest);
+	assert(src);
+	while (*dest++ = *src++);
+	return ret;
+}
+void* my_strcat(char *dest, const char *src)
+{
+	void * ret = dest;
+	assert(dest);
+	assert(src);
+	while (*dest);
+	while (*dest++ = *src++);
+	return ret;
+}
+int my_strcmp(char *dest, const char *src)
+{
+	assert(dest);
+	assert(src);
+	while (*dest == *src)
+	{
+		dest++; src++;
+	}
+	return *dest - *src;
+}
+void*  my_memcpy(void* dest,const void* src)
+{
+	void * ret = dest;
+	assert(dest);
+	assert(src);
+	while (*(char*)src)
+	{
+		*(char*)dest== *(char*)src;
+		(*(char*)dest)++;
+		(*(char*)src)++;
+	}
+	return ret;
+}
+
+void * my_memmove(void * dest,const void * src,int count	)
+{
+	void * ret = dest;
+
+	if (dest <= src || (char *)dest >= ((char *)src + count)) {
+		while (count--) {
+			*(char *)dest = *(char *)src;
+			dest = (char *)dest + 1;
+			src = (char *)src + 1;
+		}
+	}
+	else {
+		dest = (char *)dest + count - 1;
+		src = (char *)src + count - 1;
+		while (count--) {
+			*(char *)dest = *(char *)src;
+			dest = (char *)dest - 1;
+			src = (char *)src - 1;
+		}
+	}
+	return(ret);
+}
+
+int main(void)
+{
+	char str1[] = "mcvdsf";
+	char str2[] = "nvumdivn";
+	my_strcpy(str1,str2);
+	system("pause");
+	return 0;
+}
