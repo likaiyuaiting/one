@@ -1,0 +1,99 @@
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct node{
+	int data;
+	struct node *next;
+}ElemSN;
+//建立代表头的结点 
+ElemSN *CreateLink(int a[], int n)
+{
+	ElemSN *h, *t, *p;
+	h = t = (ElemSN *)malloc(sizeof(ElemSN));
+	h->next = NULL;
+	for (int i = 0; i<n; i++)
+	{
+		p = (ElemSN*)malloc(sizeof(ElemSN));
+		p->data = a[i];
+		p->next = NULL;
+		t = t->next = p;
+	}
+	return h;
+}
+//输出链表
+void PrintLink(ElemSN *h)
+{
+	ElemSN *p;
+	for (p = h->next; p; p = p->next)
+	{
+		printf("%5d", p->data);
+	}
+	printf("\n");
+}
+//合成一个链表
+void CompoundOne(ElemSN *h1, ElemSN *h2)
+{
+	ElemSN *s, *p, *t, *h;
+	h = NULL;
+	while (h1->next&&h2->next){
+		if (h1->next->data<h2->next->data)
+		{
+			p = h1->next;
+			h1->next = p->next;
+			p->next = NULL;
+		}
+		else
+		{
+			p = h2->next;
+			h2->next = p->next;
+			p->next = NULL;
+		}
+		if (!h)	h = t = p;
+		else
+		{
+			if (p->data - t->data)
+			{
+				t = t->next = p;
+				free(p);
+			}
+			else
+			{
+				free(p);
+			}
+		}
+	}
+
+	if (!h2->next)
+	{
+		s = h1->next;
+	}
+	else	s = h2->next;
+	while (s)
+	{
+		p = s;
+		s = s->next;
+		p->next = NULL;
+		if (p->data - t->data)
+		{
+			t = t->next = p;
+			free(p);
+		}
+		else free(p);
+	}
+	free(h2);
+	h1->next = h;
+}
+int main(void)
+{
+	ElemSN *head1, *head2;
+	int a[8] = { 2, 2, 5, 5, 6, 8, 9, 9 };
+	int b[5] = { 2, 3, 5, 6, 9 };
+	head1 = CreateLink(a, 8);
+	PrintLink(head1);
+	head2 = CreateLink(b, 5);
+	PrintLink(head2);
+	//合并成一个链表
+	CompoundOne(head1, head2);
+	PrintLink(head1);
+}
+
+
