@@ -1,0 +1,48 @@
+/*
+**求二元一次方程的x1,x2
+**填空处见代码
+**代码没调好，但不影响填空
+*/
+
+
+
+#include<stdio.h>
+#include<math.h>
+#include<stdlib.h>
+
+int main()
+{
+	float a, b, c;
+	double d, x1, x2;
+	scanf("%f%f%f",&a,&b,&c);
+	if (a == 0)
+	{
+		printf("This............:a==0!\n");
+		return 0;
+	}
+	printf("The ,,,,,,:%.2f",a);
+	printf("x^2+%.2f",b);
+	if (c < 0)
+	{
+		printf("x^2-%.2f", c);
+		system("pause");
+	}
+	else	
+	{ 
+		printf("x^2+%.2f", c);
+		system("pause");
+	}
+	printf("=0\n");
+	d = b*b - 4 * a*c;
+	if (d < 0)
+	{
+		printf("this........:d<0\n");
+		system("pause");
+		return 0;
+	}
+	x1 = -b + sqrt(d);//填空处
+	x1 = -b -sqrt(d);
+	printf("This........:%2lf,%2lf\n",x1,x2);
+	system("pause");
+	return 0;
+}
