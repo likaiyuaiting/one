@@ -1,0 +1,400 @@
+#if 0
+// vector::push_back
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main ()
+{
+  vector<int> myvector;
+  int myint;
+
+  cout << "Please enter some integers (enter 0 to end):\n";
+
+  do {
+    cin >> myint;
+    myvector.push_back (myint);
+  } while (myint);
+
+  cout << "myvector stores " << (int) myvector.size() << " numbers.\n";
+
+  return 0;
+}
+/*
+输出：
+Please enter some integers (enter 0 to end):
+2 4 3 5 6 0
+myvector stores 5 numbers.
+*/
+#endif
+
+#if 0
+// vector::pop_back
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main ()
+{
+  vector<int> myvector;
+  int sum (0);
+  myvector.push_back (100);
+  myvector.push_back (200);
+  myvector.push_back (300);
+
+  while (!myvector.empty())
+  {
+    sum+=myvector.back();
+    myvector.pop_back();
+  }
+
+  cout << "The elements of myvector summed " << sum << endl;
+
+  return 0;
+}
+/*
+输出：
+The elements of myvector summed  600
+*/
+#endif
+
+#if 0
+// vector::operator[]
+#include <iostream>
+#include <vector>
+using namespace std;
+#define  datatype  int
+int main ()
+{
+  vector<datatype> myvector (10);   // 10 zero-initialized elements
+  unsigned int i;
+
+  vector<datatype>::size_type sz = myvector.size();
+
+  // assign some values:
+  for (i=0; i<sz; i++) myvector[i]=i;
+
+  // reverse vector using operator[]:
+  for (i=0; i<sz/2; i++)
+  {
+    datatype temp;
+    temp = myvector[sz-1-i];
+    myvector[sz-1-i]=myvector[i];
+    myvector[i]=temp;
+  }
+
+  cout << "myvector contains:";
+  for (i=0; i<sz; i++)
+    cout << " " << myvector[i];
+
+  cout << endl;
+
+  return 0;
+}
+/*
+输出：
+yvector contains: 9 8 7 6 5 4 3 2 1 0
+*/
+#endif
+
+
+#if 0
+
+// vector::front
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main ()
+{
+  vector<int> myvector;
+
+  myvector.push_back(78);
+  myvector.push_back(16);
+
+  // now front equals 78, and back 16
+
+  myvector.front() -= myvector.back();
+
+  cout << "myvector.front() is now " << myvector.front() << endl;
+  cout << "myvector.back() is now " << myvector.back() << endl;
+
+  return 0;
+} 
+/*
+输出：
+myvector.front() is now 62
+myvector.back() is now 16
+
+--------------------------------
+Process exited with return value 0
+*/
+#endif
+
+#if 0
+
+// vector::at
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main ()
+{
+  vector<int> myvector (10);   // 10 zero-initialized ints
+  unsigned int i;
+
+  // assign some values:
+  for (i=0; i<myvector.size(); i++)
+    //myvector.at(i)=i;
+    myvector[i]=i;
+
+  cout << "myvector contains:";
+  for (i=0; i<myvector.size(); i++)
+    cout << " " << myvector.at(i);
+
+  cout << endl;
+
+  return 0;
+}
+/*
+输出：
+myvector contains: 0 1 2 3 4 5 6 7 8 9
+*/
+#endif 
+
+#if 0
+// comparing size, capacity and max_size
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main ()
+{
+  vector<int> myvector;
+
+  // set some content in the vector:
+  for (int i=0; i<100; i++) myvector.push_back(i);
+
+  cout << "size: " << myvector.size() << "\n";
+  cout << "capacity: " << myvector.capacity() << "\n";
+  cout << "max_size: " << myvector.max_size() << "\n";
+  return 0;
+}
+/*
+输出：
+size: 100
+capacity: 128
+max_size: 1073741823
+*/
+#endif
+
+#if 0
+// resizing vector
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main ()
+{
+  vector<int> myvector;
+
+  unsigned int i;
+
+  // set some initial content:
+  for (i=1;i<10;i++) myvector.push_back(i);
+
+  cout << "myvector contains:";
+  for (i=0;i<myvector.size();i++)
+    cout << " " << myvector[i];
+
+    cout<<endl;
+  myvector.resize(5);
+    cout << "myvector contains:";
+  for (i=0;i<myvector.size();i++)
+    cout << " " << myvector[i];
+
+    cout<<endl;
+
+  myvector.resize(8,100);
+    cout << "myvector contains:";
+  for (i=0;i<myvector.size();i++)
+    cout << " " << myvector[i];
+
+    cout<<endl;
+
+  myvector.resize(12);
+  cout << "myvector contains:";
+  for (i=0;i<myvector.size();i++)
+    cout << " " << myvector[i];
+
+  cout << endl;
+
+  return 0;
+}
+/*
+输出：
+myvector contains: 1 2 3 4 5 6 7 8 9
+myvector contains: 1 2 3 4 5
+myvector contains: 1 2 3 4 5 100 100 100
+myvector contains: 1 2 3 4 5 100 100 100 0 0 0 0
+*/
+#endif
+
+#if 0
+
+// clearing vectors
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main ()
+{
+  unsigned int i;
+  vector<int> myvector;
+  myvector.push_back (100);
+  myvector.push_back (200);
+  myvector.push_back (300);
+
+  cout << "myvector contains:";
+  for (i=0; i<myvector.size(); i++) cout << " " << myvector[i];
+
+  myvector.clear();
+    cout << "\nmyvector contains:";
+  for (i=0; i<myvector.size(); i++) cout << " " << myvector[i];
+
+  cout << endl;
+
+  myvector.push_back (1101);
+  myvector.push_back (2202);
+
+  cout << "\nmyvector contains:";
+  for (i=0; i<myvector.size(); i++) cout << " " << myvector[i];
+
+  cout << endl;
+
+  return 0;
+}
+/*
+输出：
+myvector contains: 100 200 300
+myvector contains:
+
+myvector contains: 1101 2202
+*/
+#endif 
+
+#if 0
+
+// erasing from vector
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main ()
+{
+  unsigned int i;
+  vector<unsigned int> myvector;
+
+  // set some values (from 1 to 10)
+  for (i=1; i<=10; i++) myvector.push_back(i);
+
+  // erase the 6th element
+  myvector.erase (myvector.begin()+5);
+
+  // erase the first 3 elements:
+  myvector.erase (myvector.begin(),myvector.begin()+3);
+
+  cout << "myvector contains:";
+  for (i=0; i<myvector.size(); i++)
+    cout << " " << myvector[i];
+  cout << endl;
+
+  return 0;
+} 
+/*
+输出：
+myvector contains: 4 5 7 8 9 10
+*/
+#endif
+
+#if 0
+
+// vector assign
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main ()
+{
+  vector<int> first;
+  vector<int> second;
+  vector<int> third;
+
+  first.assign (7,100);             // a repetition 7 times of value 100
+
+  vector<int>::iterator it;
+  it=first.begin()+1;
+
+  int i;
+    for(i=0;i<first.size();i++)
+    cout<<first.at(i)<<"   ";
+    cout<<endl;
+
+  second.assign (it,first.end()-1); // the 5 central values of first
+
+    for(i=0;i<second.size();i++)
+    cout<<second[i]<<"   ";
+    cout<<endl;
+
+  int myints[] = {1776,7,4};
+  third.assign (myints,myints+3);   // assigning from array.
+    for(i=0;i<third.size();i++)
+    cout<<third[i]<<"   ";
+    cout<<endl;
+
+  cout << "Size of first: " << int (first.size()) << endl;
+  cout << "Size of second: " << int (second.size()) << endl;
+  cout << "Size of third: " << int (third.size()) << endl;
+  return 0;
+}
+/*
+输出：
+100   100   100   100   100   100   100
+100   100   100   100   100
+1776   7   4
+Size of first: 7
+Size of second: 5
+Size of third: 3
+*/
+#endif 
+
+#if 1
+// swap vectors
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main ()
+{
+  unsigned int i;
+  vector<int> first (3,100);   // three ints with a value of 100
+  vector<int> second (5,200);  // five ints with a value of 200
+
+  first.swap(second);
+
+  cout << "first contains:";
+  for (i=0; i<first.size(); i++) cout << " " << first[i];
+
+  cout << "\nsecond contains:";
+  for (i=0; i<second.size(); i++) cout << " " << second[i];
+
+  cout << endl;
+
+  return 0;
+}
+/*
+输出：
+first contains: 200 200 200 200 200
+second contains: 100 100 100
+*/
+#endif
