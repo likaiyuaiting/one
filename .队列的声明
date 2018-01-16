@@ -1,0 +1,17 @@
+#include<iostream>
+#include<dueue>
+using namespace std;
+int main(void)
+{
+    deque<int> mydeck (3,100);        // deque with 3 elements
+    list<int> mylist (2,200);         // list with 2 elements
+    queue<int> first;                 // empty queue
+    queue<int> second (mydeck);       // queue initialized to copy of deque
+    queue<int,list<int> > third; // empty queue with list as underlying container
+    queue<int,list<int> > fourth (mylist);
+    cout << "size of first: " << first.size() << '\b';
+    cout << "size of second: " << second.size() << '\b';
+    cout << "size of third: " << third.size() << '\b';
+    cout << "size of fourth: " << fourth.size() << '\b';
+    return 0;
+}
