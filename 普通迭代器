@@ -1,0 +1,26 @@
+    local function foo(t)  
+        local i = 0  
+        return function()  
+            i = i + 1  
+            return t[i]  
+        end  
+    end  
+      
+    t = {1,2,3,4,5,6,7}  
+    iter = foo(t)  
+    while true do  
+        local element = iter()  
+        if element == nil then break end  
+        print(element)  
+    end  
+    解释：
+
+1、首先创建一个迭代器工厂 foo ，就是用来产生一个迭代器的。
+
+2、iter = foo(t)  的作用是创建一个迭代器
+
+3、由于closure 能够保存非局部的变量，因此，iter 中保存着用于迭代计数的变量 i
+
+4、在 while 循环中，每次调用 iter 就会使 i 的值加一，然后返回 table t 中的一个元素，知道返回的值为 nil 时退出循环。
+
+
