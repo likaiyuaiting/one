@@ -1,0 +1,18 @@
+#include<iostream>  
+using namespace std;  
+int main()  
+{  
+    int value,radix, data[33], num = 0; // value表示十进制的值，radix表示进制，data用于存储装换为radix进制后的每一位，num表示转换为radix进制后共有多少位  
+    cin >> value >> radix;  
+    do  
+    {  
+        data[num++] = value % radix;  
+        value /= radix;  
+    } while (value != 0);  
+    for (int i = num - 1; i >= 0; i--)  
+    {  
+        cout << data[i];  
+    }  
+    cout << endl;  
+    return 0;  
+} 
