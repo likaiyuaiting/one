@@ -1,0 +1,29 @@
+这个问题本来很简单，但是时间久了就容易忘，所以做个笔记用来提示下自己
+
+
+先来看看这样一个类：
+
+
+    class HasPtr  
+    {  
+    public:  
+        HasPtr(const string& s = string()) :ps(new string(s)), i(0) {}  
+        ~HasPtr() { delete ps; }  
+    private:  
+        string * ps;  
+        int i;  
+    };  
+在HasPtr类里面定义了析构函数，但是没有定义拷贝构造函数和拷贝赋值运算符，这时，编译器将自动为我们生成拷贝构造函数和拷贝赋值运算符，由于编译器自动生成的仅仅是执行简单的拷贝操作，所以对于指针，合成的版本也是仅仅拷贝其地址。
+
+
+如果类外面有这样一个函数：
+HasPtr f(HasPtr hp)  
+{  
+    HasPtr ret = hp;  
+    ///... 其他操作  
+    return ret;  
+  
+} 
+当函数执行完了之后，将会调用hp和ret的析构函数，将hp和ret的成员ps给delete掉，但是由于ret和hp指向了同一个对象，因此该对象的ps成员被delete了两次，这样产生一个未定义的错误，所以说：
+
+如果一个类定义了析构函数，那么它几乎肯定要定义自己的拷贝构造函数和拷贝赋值运算符。
