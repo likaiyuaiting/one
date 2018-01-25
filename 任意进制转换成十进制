@@ -1,0 +1,16 @@
+#include<iostream>  
+using namespace std;  
+int main()  
+{  
+    int value,radix, res = 0 , p = 1;// value表示任意进制的值，radix表示value是多少进制，res表示转换为十进制后的值，p表示权  
+    cin >> value >> radix;  
+    while (value != 0)  
+    {  
+        res += (value % 10)*p;  
+        value /= 10;  
+        p *= radix;  
+    }  
+    cout << res << endl;  
+    return 0;  
+}
+//方法就是按权展开
