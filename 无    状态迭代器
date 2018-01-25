@@ -1,0 +1,25 @@
+local function iter(t,i)  
+    i = i + 1  
+    local value = t[i]  
+    if value then  
+        return i,value  
+    end  
+end  
+  
+function foo(t)  
+    return iter,t,0  
+end  
+  
+t = {1,2,3,4,5,6,7}  
+for i,v in foo(t)do  
+    print(i,v)  
+end 
+解释：
+
+1、in 后面foo(t) 的调用返回三个值，分别是迭代器函数 iter，恒定状态 t，控制变量 i（初始值为0），foo(t) 也只调用一次
+
+2、在迭代的过程中，始终调用iter(t,i)，直到 iter 函数的返回值中的第一个值为 nil
+
+3、为什么该迭代器相较前面的迭代器就被成为无状态的迭代器？
+
+原因是该迭代器不保存任何状态信息，没有创建 closure，直接将迭代器函数，恒定状态和控制变量返回给泛型 for 循环，由 for 循环保存状态信息
