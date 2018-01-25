@@ -1,0 +1,20 @@
+    local function iter(state)  
+        if state.state1 then  
+            state.controller = state.controller + 1  
+            return state.inf[state.controller]  
+        end  
+    end  
+      
+    function foo(t)  
+        local state = {inf = t,controller = 0,state1=true}  
+        return iter,state  
+    end  
+      
+    t = {1,2,3,4,5,6,7}  
+      
+    for value in foo(t) do  
+        print(value)  
+    end  
+    解释：
+
+  这个迭代器仅仅是将多个状态放在了一个 table 中，原理和前一个迭代器是一样的，就不在赘述了。
